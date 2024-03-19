@@ -1,7 +1,21 @@
-# Проектная работа 8 спринта
+# Проект "Онлайн Кинотеатр"
+
+## Сервис UGC +
+
+Репозиторий для сервиса, направленного на улучшение функционала UGC. Включает в себя настройку CI/CD процессов, сравнение использования MongoDB с ClickHouse для хранения данных, настройку системы логирования с использованием Sentry и ELK для более эффективного мониторинга и отладки.
+
+## Содержание:
+
+- [Django Admin Panel](https://github.com/kaedeMirai/new_admin_panel_sprint_1)
+- [ETL from Postgresql to Elastic](https://github.com/kaedeMirai/admin_panel_sprint_3)
+- [Auth](https://github.com/kaedeMirai/Auth_sprint_1-2)
+- [UGC](https://github.com/kaedeMirai/ugc_sprint_1)
+- [UGC +](https://github.com/kaedeMirai/ugc_sprint_2)
+- [Notification service]()
+- [Watch Together service]()
 
 ## Где найти код?
-1. [9 sprint](https://github.com/Munewxar/ugc_sprint_2) - здесь хранится код заданий 9 спринта
+1. [9 sprint](https://github.com/kaedeMirai/ugc_sprint_2) - здесь хранится код заданий 9 спринта
 
 ## Ссылка на документацию api
 1. http://0.0.0.0:8282/api/openapi
@@ -10,7 +24,7 @@
 1. Склонировать репозиторий:
 
    ```
-   git clone https://github.com/Munewxar/ugc_sprint_2.git
+   git clone https://github.com/kaedeMirai/ugc_sprint_2.git
    ```
 2. Скопировать .env.example в .env (либо переименовать .env.example) и заполнить их
 3. В командной строке запустить проект:
