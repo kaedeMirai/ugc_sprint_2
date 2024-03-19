@@ -11,8 +11,8 @@
 - [Auth](https://github.com/kaedeMirai/Auth_sprint_1-2) - **Аутентификация и авторизация пользователей на сайте с системой ролей**
 - [UGC](https://github.com/kaedeMirai/ugc_sprint_1) - **Сервис для удобного хранения аналитической информации и UGC**
 - [UGC +](https://github.com/kaedeMirai/ugc_sprint_2) - **Улучшение функционала UGC внедрением CI/CD процессов и настройкой системы логирования Setnry и ELK**
-- [Notification service]()
-- [Watch Together service]()
+- [Notification service]() - **Отправка уведомлений пользователям о важных событиях и акциях в кинотеатре.**
+- [Watch Together service]() - **Позволяет пользователям смотреть фильмы совместно в реальном времени, обеспечивая синхронизацию видео и чата.**
 
 ## Где найти код?
 1. [9 sprint](https://github.com/kaedeMirai/ugc_sprint_2) - здесь хранится код заданий 9 спринта
