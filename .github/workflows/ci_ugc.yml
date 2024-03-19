@@ -1,0 +1,74 @@
+name: ugc CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |  
+        python -m pip install --upgrade pip
+        pip install wemake-python-styleguide mypy flake8-html lxml
+        if [ -f tests/requirements.txt ]; then pip install -r tests/requirements.txt; fi
+
+    - name: Create directory for reports
+      run: |
+        mkdir -p reports/wemake-python-styleguide/
+        mkdir -p reports/mypy/
+
+    - name: Run mypy
+      run: |
+        mypy . --html-report reports/mypy/ || true
+    
+    - name: Run linters with wemake-python-styleguide
+      run: |
+        flake8 . --format=html --htmldir=reports/wemake-python-styleguide/ --statistics \
+        --exit-zero 
+
+    - name: Archive HTML reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: reports-${{ matrix.python-version }}
+        path: reports/
+
+    - name: Extract pull request info
+      run: |
+        PR_NUMBER=$(echo ${{ github.ref }} | sed -n 's|.*\(pull/[0-9]\+\).*|\1|p')
+        echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+
+    - name: send telegram message on accepted push
+      if: ${{ github.event_name == 'pull_request' && matrix.python-version == '3.11' }}
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_CHAT_ID }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.actor }} create PR.
+          https://github.com/${{ github.repository }}/${{ env.PR_NUMBER }}
+
+    - name: Test with pytest
+      run: |
+        if [ -n "$(find tests -type f -name '*.py')" ]; then
+          pip install pytest
+          pytest tests
+        else
+          echo "No tests found, skipping pytest."
+        fi

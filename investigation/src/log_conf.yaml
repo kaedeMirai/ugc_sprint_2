@@ -1,0 +1,25 @@
+version: 1
+disable_existing_loggers: False
+formatters:
+  json:
+    (): pythonjsonlogger.jsonlogger.JsonFormatter
+    fmt: '%(name)s %(lineno)d %(levelname)s %(message)s'
+    timestamp: true
+
+handlers:
+  uvicorn.logstash:
+    class: logstash.LogstashHandler
+    host: logstash
+    port: 5044
+  uvicorn.stdout:
+    class: logging.StreamHandler
+    formatter: json
+    stream: ext://sys.stdout
+
+loggers:
+  uvicorn:
+    level: INFO
+    handlers:
+      - uvicorn.logstash
+      - uvicorn.stdout
+    propagate: no
